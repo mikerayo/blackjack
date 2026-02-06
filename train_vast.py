@@ -19,6 +19,9 @@ if torch.cuda.is_available():
     print(f"   GPU Memory: {torch.cuda.get_device_properties(0).total_memory / 1e9:.1f} GB")
     print(f"   CUDA Version: {torch.version.cuda}")
 
+# Agregar src al path
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'src'))
+
 # Importar después de verificar
 from environment.blackjack_env import BlackjackEnv
 from agent.scalable_trainer import ScalableTrainer
