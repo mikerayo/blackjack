@@ -184,6 +184,14 @@ class ScalableTrainer:
         next_states = torch.FloatTensor(next_states)
         dones = torch.FloatTensor(dones)
 
+        # Move to GPU if available
+        device = next(self.policy_network.parameters()).device
+        states = states.to(device)
+        actions = actions.to(device)
+        rewards = rewards.to(device)
+        next_states = next_states.to(device)
+        dones = dones.to(device)
+
         current_q_values = self.policy_network(states).gather(1, actions.unsqueeze(1))
 
         with torch.no_grad():
