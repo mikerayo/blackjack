@@ -104,6 +104,9 @@ class DQN(nn.Module):
             # Greedy action
             with torch.no_grad():
                 state_tensor = torch.FloatTensor(state).unsqueeze(0)
+                # Move to same device as network
+                device = next(self.network.parameters()).device
+                state_tensor = state_tensor.to(device)
                 q_values = self.forward(state_tensor)
 
                 if valid_actions:
@@ -126,6 +129,9 @@ class DQN(nn.Module):
         """
         with torch.no_grad():
             state_tensor = torch.FloatTensor(state).unsqueeze(0)
+            # Move to same device as network
+            device = next(self.network.parameters()).device
+            state_tensor = state_tensor.to(device)
             q_values = self.forward(state_tensor)
             return q_values.squeeze(0).cpu().numpy()
 
