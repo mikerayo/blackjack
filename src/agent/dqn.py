@@ -112,6 +112,8 @@ class DQN(nn.Module):
                 if valid_actions:
                     # Mask invalid actions
                     mask = torch.ones(self.action_dim) * float('-inf')
+                    device = next(self.network.parameters()).device
+                    mask = mask.to(device)
                     mask[valid_actions] = 0
                     q_values = q_values + mask
 
